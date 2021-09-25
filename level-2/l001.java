@@ -187,4 +187,68 @@ public TreeNode lowestCommmonAncestor1(TreeNode root,TreeNode p,TreeNode q){
     return LCA;
 }
 
+public static void printSingleChildNodes(TreeNode node,TreeNode parent){
+    if(node==null){
+        return;
+    }
+    if(parent!=null &&(parent.left==null || parent.right==null)){
+        System.out.println(node.val);
+    }
+
+    printSingleChildNodes(node.left,node);
+    printSingleChildNodes(node.right,node);
+}
+public static TreeNode removeLeaves(TreeNode node){
+    if(node==null){
+        return null;
+    }
+    if(node.left==null && node.right==null){
+        return null;
+    }
+    removeLeaves(node.left);
+    removeLeaves(node.right);
+}
+public static void removeLeaves_(TreeNode root,TreeNode par){
+    if(root==null){
+        return;
+    }
+
+    if(root.left==null && root.right==null){
+        if(par.left==root){
+            par.left=null;
+        }else{
+            par.right=null;
+        }
+    }
+    removeLeaves_(root.left,root);
+    removeLeaves_(root.right,root);
+
+}
+public static TreeNode removeLeaves(TreeNode root){
+    if(root.left==null && root.right==null){
+        return null;
+    }
+    removeLeaves_(root,null);
+    return root;
+}
+public static TreeNode prev= null; 
+public static boolean isBst(TreeNode root){
+    if(node==null){
+        return true;
+    }
+    boolean left=isBst(root.left);
+    if(!left){
+        return false;
+    }
+    if(prev!=null && prev.val>root.val){
+        return false;
+    }
+
+    boolean right=isBst(root.right);
+    if(!right){
+        return false;
+    }
+    return true;
+}
+
 }
