@@ -39,4 +39,30 @@ public class morrisTraversal{
         }
         return ans;
     }
+
+    public static ArrayList<Integer> morrisPreorderTraversal(TreeNode root){
+        ArrayList<Integer>ans=new ArrayList<>();
+        TreeNode curr=root;
+        while(curr!=null){
+
+        TreeNode left=curr.left;
+        if(left==null){
+            ans.add(curr.val);
+            curr=curr.right;
+        }else{
+            TreeNode rightMostNode=getRightMostNode(left,curr);
+            if(rightMostNode.right==null){
+                rightMostNode.right=curr;
+                ans.add(curr.val);
+                curr=curr.left;
+
+            }else{
+                rightMostNode.right=null;
+                curr=curr.right;
+            }
+        }
+        }
+        return ans;
+    }
+
 }
