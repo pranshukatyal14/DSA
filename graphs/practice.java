@@ -1,4 +1,4 @@
-public class l001{
+public class practice{
 
     public static class Edge{
         int v=0;
@@ -7,23 +7,24 @@ public class l001{
         Edge(int v,int w){
             this.v=v;
             this.w=w;
+
         }
         public String toString(){
-            return "("+this.v+","+this.w+")";
+            return "(" + this.v +","+this.w+")";
         }
     }
     public static int N=7;
-
     public static ArrayList<Edge>[]graph=new ArrayList[N];
 
     public static void addEdge(int u,int v,int w){
         graph[u].add(new Edge(v,w));
         graph[v].add(new Edge(u,w));
+
     }
     public static void display(){
         for(int i=0;i<N;i++){
             System.out.print(i+"->");
-            for(Edge e: graph[i]){
+            for(Edge e:graph[i]){
                 System.out.print(e);
             }
             System.out.println();
@@ -35,7 +36,6 @@ public class l001{
             if(e.v==v){
                 return i;
             }
-            
         }
         return -1;
     }
@@ -49,11 +49,11 @@ public class l001{
     public static void removeVtx(int u){
         while(graph[u].size()!=0){
             int n=graph[u].size();
-            Edge e= graph[u].get(n-1);
+            Edge e=graph[u].get(n-1);
             removeEdge(u,e.v);
         }
     }
-    public static boolean hasPath(int src,int des,boolean[] vis){
+    public static boolean hasPath(int src,int des,boolean vis){
         if(src==des){
             return true;
         }
@@ -62,8 +62,6 @@ public class l001{
         for(Edge e:graph[src]){
             if(!vis[e.v]){
                 res=res|| hasPath(e.v,des,vis);
-            
-                
             }
         }
             return res;
@@ -77,44 +75,43 @@ public class l001{
         vis[src]=true;
         for(Edge e: graph[src]){
             if(vis[e.v]==false){
-                count+=printAllPaths(e.v,des,vis,psf+e.v);
+                count+=printAllPaths(e.v,dest,vis,psf+e.v);
             }
         }
         vis[src]=false;
         return count;
     }
-    public static void printPreOrder(int src,boolean[]vis,String ans,int wsf){
+    public static void printPreOrder(int src,boolean[] vis,String ans,int wsf){
 
-        System.out.println(src + "->" + ans+src+"@"+wsf);
+        System.out.println(src + "->"+ans+src+"@"+wsf);
         vis[src]=true;
         for(Edge e:graph[src]){
             if(vis[e.v]==false){
-                printPreOrder(e.v,vis,ans+src,wsf+e.w);
+                printPreOrder(e.v,vis,ans+src,esf+e.w);
             }
         }
         vis[src]=false;
     }
-    public static void printPostOrder(int src,boolean[]vis,String ans,int wsf){
+    public static void printPostOrder(int src,boolean [] vis,String ans,int wsf){
         vis[src]=true;
-        for(Edge e: graph[src]){
+        for(Edge e:graph[src]){
             if(!vis[e.v]){
                 printPostOrder(e.v,vis,ans+src,wsf+e.w);
             }
         }
-        System.out.println(src+"->" + ans+src +"@"+wsf);
+        System.out.println(src+"->"+ans+src+"@"+wsf);
         vis[src]=false;
     }
-    
-    public static void BFS(int src, boolean[]vis){
+
+    public static void BFS(int src,boolean[]vis){
         int level=0;
         int cycleCount=0;
         LinkedList<Integer>que=new LinkedList<>();
         que.addLast(src);
         while(que.size()!=0){
             int size=que.size();
-            System.out.print(level+ "->");
-
-            while (size-->0){
+            System.out.print(level+"->");
+            while(size-->0){
                 int rvtx=que.removeFirst();
                 if(vis[rvtx]){
                     cycleCount++;
@@ -128,7 +125,7 @@ public class l001{
                     }
                 }
             }
-            System.out.println();
+            System.out.print();
             level++;
         }
     }
@@ -145,14 +142,15 @@ public class l001{
                 int rvtx=que.removeFirst();
                 System.out.print(rvtx+" ");
                 for(Edge e:graph[rvtx]){
-                    if(!vis[e.v]){
+                    if(vis[e.v]==false){
                         que.addLast(e.v);
                         vis[e.v]=true;
                     }
                 }
+
             }
-            System.out.println();
             level++;
+            System.out.println();
         }
     }
     public static boolean isBipartite(int src){
@@ -169,8 +167,7 @@ public class l001{
                     if(vis[rvtx]!=color){
                         return false;
                     }
-                      continue;
-                    
+                    continue;
                 }
                 vis[rvtx]=color;
                 for(Edge e:graph[rvtx]){
@@ -182,7 +179,10 @@ public class l001{
             color=(color+1)%2;
         }
         return true;
+
     }
+
+
 
 
 }
