@@ -181,7 +181,34 @@ public class practice{
         return true;
 
     }
+    public static boolean dfs_findPath(ArrayList<Edge>[]graph,int src,int dest,boolean []vis){
 
+        vis[src]=true;
+        boolean res=false;
+        for(Edge e:graph[src]){
+            if(!vis[e.v]){
+                res=res|| dfs_findPath(graph,e.v,dest,vis);
+            }
+        }
+        return res;
+    }
+
+    public static int printAllPaths(ArrayList<Edge>[]graph,int src,int dest,String psf,int wsf,boolean[]vis){
+        if(src==dest){
+            System.out.println(psf+dest+"@"+wsf);
+            return 1;
+        }
+        
+        vis[src]=true;
+        int count=0;
+        for(Edge e:graph[src]){
+            if(!vis[e.v]){
+                count+=printAllPaths(graph,e.v,dest,psf+e.v,wsf+e.w,vis);
+            }
+        }
+        vis[src]=false;
+        return count;
+    }
 
 
 
