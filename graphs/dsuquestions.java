@@ -60,5 +60,47 @@ public class dsuquestions{
         return ans;
     }
 
+    // mr president
+    public int mrpresident(int[][]edges,int N,int k){
+        par=new int [N+1];
+        for(int i=0;i<=N;i++){
+            par[i]=i;
+        }
+        Arrays.sort(edges,(a,b)->{
+            return a[2]-b[2];
+        });
+        ArrayList<Integer>roads=new ArrayList<>();
+        int components=N;
+        int mcost=0;
+        for(int[]e:edges){
+            int u=e[0];
+            int v=e[1];
+            int w=e[2];
+
+            int p1=findPar(u);
+            int p2=findPar(v);
+            if(p1!=p2){
+                par[p1]=p2;
+                components--;
+                mcost+w;
+                roads.add(w);
+            }
+
+        }
+        if(components>1){
+            return -1;
+        }
+        int superRoad=0;
+        for(int i=roads.size()-1;i>=0;i--){
+            if(mcost<=k){
+                break;
+            }
+            mcost=mcost-roads.get(i)+1;
+            superRoad++;
+        }
+        return mcost<=k?superRoad:-1;
+    }
+
+
 
 }
